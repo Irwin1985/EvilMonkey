@@ -2,7 +2,7 @@
 // Created by irwin on 03/08/2021.
 //
 #include <unordered_map>
-#include "Token.h"
+#include "token.h"
 
 namespace monkey {
     // llenamos el diccionario con la lista de palabras reservadas

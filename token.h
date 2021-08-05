@@ -19,7 +19,7 @@ namespace monkey {
         std::string literal;
     };
 
-    const TokenType ILLEGAL = "ILLEGAL"; // token ilegal o desconocido.
+    const TokenType ILLEGAL = "ILLEGAL"; // Token ilegal o desconocido.
     const TokenType END = "END"; // usamos END en lugar de EOF porque es reservada en C++.
 
     const TokenType IDENT = "IDENT"; // para identificadores como foo, bar, x, y, etc

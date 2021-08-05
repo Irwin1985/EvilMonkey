@@ -1,7 +1,7 @@
 //
 // Created by irwin on 03/08/2021.
 //
-#include "Lexer.h"
+#include "lexer.h"
 
 namespace monkey {
     /**
@@ -18,7 +18,7 @@ namespace monkey {
      /**
       * Private functions
       */
-      void Lexer::readChar() {
+      void lexer::readChar() {
           if (readPosition >= input.size()) {
               ch = 0;
           } else {
@@ -28,14 +28,14 @@ namespace monkey {
           readPosition += 1;
       }
 
-      char Lexer::peekChar() {
+      char lexer::peekChar() {
           if (readPosition >= input.size()) {
               return 0;
           }
           return input[readPosition];
       }
 
-      std::string Lexer::readIdentifier() {
+      std::string lexer::readIdentifier() {
           int start = position;
           do {
               readChar();
@@ -44,7 +44,7 @@ namespace monkey {
           return input.substr(start, position - start);
       }
 
-      std::string Lexer::readNumber() {
+      std::string lexer::readNumber() {
           int start = position;
           do {
               readChar();
@@ -53,7 +53,7 @@ namespace monkey {
           return input.substr(start, position - start);
       }
 
-      std::string Lexer::readString() {
+      std::string lexer::readString() {
           readChar(); // skip first "
           int start = position;
           do {
@@ -65,7 +65,7 @@ namespace monkey {
           return input.substr(start, end - start);
       }
 
-      void Lexer::skipWhitespace() {
+      void lexer::skipWhitespace() {
           while(ch != 0 && (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n')) {
               readChar();
           }
@@ -73,13 +73,13 @@ namespace monkey {
       /**
        * public functions
        */
-       void Lexer::New(std::string& input) {
+       void lexer::New(std::string& input) {
            this->input = input;
            readPosition = 0;
            readChar();
        }
 
-      Token Lexer::NextToken() {
+      Token lexer::NextToken() {
           Token tok;
           skipWhitespace();
           switch (ch) {

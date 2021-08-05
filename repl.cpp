@@ -2,8 +2,8 @@
 // Created by irwin on 03/08/2021.
 //
 #include <iostream>
-#include "Repl.h"
-#include "Lexer.h"
+#include "repl.h"
+#include "lexer.h"
 
 namespace monkey {
     void Start(std::string mode, std::string& input) {
@@ -19,7 +19,7 @@ namespace monkey {
     }
 
     void debugLexer(std::string& input) {
-        Lexer l;
+        lexer l;
         l.New(input);
         Token tok = l.NextToken();
 

@@ -4,11 +4,11 @@
 
 #ifndef EVILMONKEY_LEXER_H
 #define EVILMONKEY_LEXER_H
-#include "Token.h"
+#include "token.h"
 #include <string>
 
 namespace monkey {
-    class Lexer {
+    class lexer {
     public:
         void New(std::string& input);
         Token NextToken();
