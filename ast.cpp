@@ -6,16 +6,16 @@
 namespace monkey {
     // Program::TokenLiteral()
     std::string Program::TokenLiteral() {
-        if (statements.size()) {
-            return statements[0]->String();
+        if (!statements.empty()) {
+            return statements[0]->String() + ";";
         }
         return "";
     }
     // Program::String()
     std::string Program::String() {
-        std::string out = "";
+        std::string out;
         for (auto stmt : statements) {
-            out += stmt->String() + '\n';
+            out += stmt->String() + ";\n";
         }
         return out;
     }
@@ -68,7 +68,7 @@ namespace monkey {
     std::string FunctionLiteral::String() {
         std::string out = "fn(";
         // Parámetros de la función (si es que tiene)
-        if (parameters.size()) {
+        if (!parameters.empty()) {
             int i = 0;
             for (auto param : parameters) {
                 i += 1;
@@ -113,12 +113,12 @@ namespace monkey {
 
     // LetStatement::String()
     std::string LetStatement::String() {
-        return "let " + name.String() + " = " + value->String();
+        return "let " + name->String() + " = " + value->String();
     }
 
     // RefStatement::String()
     std::string RefStatement::String() {
-        return "ref " + name.String() + " = " + value->String();
+        return "ref " + name->String() + " = " + value->String();
     }
 
     // ReturnStatement::String()

@@ -18,7 +18,7 @@ namespace monkey {
      /**
       * Private functions
       */
-      void lexer::readChar() {
+      void Lexer::readChar() {
           if (readPosition >= input.size()) {
               ch = 0;
           } else {
@@ -28,14 +28,14 @@ namespace monkey {
           readPosition += 1;
       }
 
-      char lexer::peekChar() {
+      char Lexer::peekChar() {
           if (readPosition >= input.size()) {
               return 0;
           }
           return input[readPosition];
       }
 
-      std::string lexer::readIdentifier() {
+      std::string Lexer::readIdentifier() {
           int start = position;
           do {
               readChar();
@@ -44,7 +44,7 @@ namespace monkey {
           return input.substr(start, position - start);
       }
 
-      std::string lexer::readNumber() {
+      std::string Lexer::readNumber() {
           int start = position;
           do {
               readChar();
@@ -53,7 +53,7 @@ namespace monkey {
           return input.substr(start, position - start);
       }
 
-      std::string lexer::readString() {
+      std::string Lexer::readString() {
           readChar(); // skip first "
           int start = position;
           do {
@@ -65,7 +65,7 @@ namespace monkey {
           return input.substr(start, end - start);
       }
 
-      void lexer::skipWhitespace() {
+      void Lexer::skipWhitespace() {
           while(ch != 0 && (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n')) {
               readChar();
           }
@@ -73,13 +73,13 @@ namespace monkey {
       /**
        * public functions
        */
-       void lexer::New(std::string& input) {
+       void Lexer::New(std::string& input) {
            this->input = input;
            readPosition = 0;
            readChar();
        }
 
-      Token lexer::NextToken() {
+      Token Lexer::NextToken() {
           Token tok;
           skipWhitespace();
           switch (ch) {

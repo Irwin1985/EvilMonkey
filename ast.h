@@ -84,6 +84,8 @@ namespace monkey {
     */
     class ExpressionStatement : public Statement {
     public:
+        ExpressionStatement() = default;
+        explicit ExpressionStatement(Token t) { token = t; }
         ~ExpressionStatement() {
             delete expression; // liberamos la expression
         }
@@ -100,9 +102,11 @@ namespace monkey {
     */
     class IntegerLiteral : public Expression {
     public:
-        void expressionNode() {}
-        std::string TokenLiteral() { return token.literal; }
-        std::string String() { return std::to_string(value); }
+        IntegerLiteral() = default;
+        explicit IntegerLiteral(Token t, int v) { token = t; value = v; }
+        void expressionNode() override {}
+        std::string TokenLiteral() override { return token.literal; }
+        std::string String() override { return std::to_string(value); }
         std::string Type() override { return "IntegerLiteral"; }
 
         // ~IntegerLiteral() override = 0;
@@ -114,11 +118,13 @@ namespace monkey {
     */
     class StringLiteral : public Expression {
     public:
-        void expressionNode() {}
+        StringLiteral() = default;
+        explicit StringLiteral(Token t, std::string v) { token = t; value = v; }
+        void expressionNode() override {}
         std::string TokenLiteral() override { return token.literal; }
-        std::string String() { return value; };
+        std::string String() override { return "\"" + value + "\""; };
 
-        std::string Type() { return "StringLiteral"; }
+        std::string Type() override { return "StringLiteral"; }
         Token token;
         std::string value;
     };
@@ -127,9 +133,11 @@ namespace monkey {
     */
     class BooleanLiteral : public Expression {
     public:
-        void expressionNode() {}
+        BooleanLiteral() = default;
+        explicit BooleanLiteral(Token t, bool v) { token = t; value = v; }
+        void expressionNode() override {}
         std::string TokenLiteral() override {return token.literal; }
-        std::string String() { return value ? "true" : "false"; };
+        std::string String() override { return value ? "true" : "false"; };
         std::string Type() override { return "BooleanLiteral"; }
 
         Token token;
@@ -140,9 +148,11 @@ namespace monkey {
     */
     class Identifier : public Expression {
     public:
-        std::string TokenLiteral() { return token.literal; }
-        std::string String() { return value; };
-        std::string Type() { return "Identifier"; }
+        Identifier() = default;
+        explicit Identifier(Token t, std::string v) { token = t; value = v;}
+        std::string TokenLiteral() override { return token.literal; }
+        std::string String() override { return value; };
+        std::string Type() override { return "Identifier"; }
 
         void expressionNode() {}
         Token token;
@@ -167,9 +177,11 @@ namespace monkey {
     */
     class InfixExpression : public Expression {
     public:
-        std::string TokenLiteral() { return token.literal; }
+        InfixExpression() = default;
+        explicit InfixExpression(Token t, Expression* l, std::string o) { token = t; left = l; op = o;}
+        std::string TokenLiteral() override { return token.literal; }
         std::string String();
-        std::string Type() { return "InfixExpression"; }
+        std::string Type() override { return "InfixExpression"; }
 
         void expressionNode() {}
         Token token;
@@ -290,24 +302,27 @@ namespace monkey {
     */
     class LetStatement : public Statement {
     public:
+        //LetStatement() = default; // constructor vacío
+        explicit LetStatement(Token t) { token = t; }
         ~LetStatement() {
             delete value;
         }
-        void statementNode();
-        std::string TokenLiteral() { return token.literal; }
+
+        void statementNode() {};
+        std::string TokenLiteral() override { return token.literal; }
         std::string String();
-        std::string Type() { return "LetStatement"; }
+        std::string Type() override  { return "LetStatement"; }
 
         Token token;
-        Identifier name; // ¿Por qué una copia y no el puntero?
-        Expression* value;
+        Identifier *name{}; // ¿Por qué una copia y no el puntero?
+        Expression* value{};
     };
     /**
     * RefStatement: para sentencias como &a = 6;
     */
     class RefStatement : public Statement {
     public:
-        ~RefStatement() override {
+        ~RefStatement() {
            // Si value es un puntero a Expression y aquí se borra (que es lo correcto)
            // entonces ¿Por qué los otros AST's que usan punteros no los borran ?
            delete value;
@@ -319,7 +334,7 @@ namespace monkey {
         std::string Type() { return "RefStatement"; }
 
         Token token;
-        Identifier name; // ¿ No debería ser un puntero ?
+        Identifier *name; // ¿ No debería ser un puntero ?
         Expression* value;
     };
     /**
@@ -327,6 +342,8 @@ namespace monkey {
     */
     class ReturnStatement : public Statement {
     public:
+        ReturnStatement() = default;
+        explicit ReturnStatement(Token t) { token = t; }
         ~ReturnStatement() {
             delete value;
         }

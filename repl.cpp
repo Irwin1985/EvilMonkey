@@ -4,6 +4,7 @@
 #include <iostream>
 #include "repl.h"
 #include "lexer.h"
+#include "parser.h"
 
 namespace monkey {
     void Start(std::string mode, std::string& input) {
@@ -12,14 +13,14 @@ namespace monkey {
         } else if (mode == "lexer") {
             debugLexer(input);
         } else if (mode == "parser") {
-            // TODO: invocar el parser aquí.
+            debugParser(input);
         } else if (mode == "interpreter") {
             // TODO: invocar el interprete aquí.
         }
     }
-
+    // debugLexer
     void debugLexer(std::string& input) {
-        lexer l;
+        Lexer l;
         l.New(input);
         Token tok = l.NextToken();
 
@@ -30,5 +31,15 @@ namespace monkey {
 
         std::cout << "<" << tok.type << ", '" << tok.literal << "'" << ">" << std::endl;
     }
+    // debugParser
+    void debugParser(std::string& input) {
+        Lexer l;
+        l.New(input);
+        Parser p;
+        p.New(l);
+        auto *program = p.parseProgram();
+        if (program != nullptr) {
+            std::cout << program->String() << std::endl;
+        }
+    }
 }
-

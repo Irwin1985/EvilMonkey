@@ -8,7 +8,7 @@
 #include <string>
 
 namespace monkey {
-    class lexer {
+    class Lexer {
     public:
         void New(std::string& input);
         Token NextToken();
